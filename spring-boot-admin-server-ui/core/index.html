@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Spring Boot Admin</title>
+    <title>Spring Actuator</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png"/>
@@ -15,16 +15,9 @@
 <body>
 <header class="navbar header--navbar desktop-only">
     <div class="navbar-inner">
-        <div class="container-fluid">
-
-            <a class="brand" href="#">Spring Boot Admin</a>
-            <ul class="nav pull-right">
-                <li ng-repeat="view in mainViews" class="navbar-link" ng-class="{active: $state.includes(view.state)}">
-                    <a ui-sref="{{view.state}}" ng-bind-html="view.title"></a>
-                </li>
-            </ul>
-
-        </div>
+        <!--<div class="container-fluid">-->
+            <a href="#" class="navbar-brand left pull-left"><img src="img/logo.png" width="200" height="148" class="img-responsive log-img"></a>
+        <!--</div>-->
     </div>
 </header>
 

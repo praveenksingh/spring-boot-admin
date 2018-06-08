@@ -24,6 +24,7 @@ require('googlefonts.css');
 require('./css/core.css');
 
 require('./img/favicon.png');
+require('./img/logo.png');
 
 require('eventsource-polyfill');
 require('es6-shim');
