@@ -101,3 +101,14 @@ pre {
 .footer ul {
   text-align: center;
 }
+
+.logo {
+  padding-right: 40px;
+}
+
+.name {
+  font-size: 14px;
+  color: #333;
+  padding-top: 15px;
+  padding-left: 40px;
+}

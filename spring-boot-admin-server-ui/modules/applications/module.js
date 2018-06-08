@@ -63,7 +63,7 @@ module.config(function ($stateProvider) {
   });
 });
 
-module.run(function ($rootScope, $state, Notification, Application, ApplicationGroups, MainViews) {
+module.run(function ($rootScope, $state, Notification, Application, ApplicationGroups, MainViews, $location) {
   MainViews.register({
     title: 'Applications',
     state: 'applications-list',
@@ -74,51 +74,8 @@ module.run(function ($rootScope, $state, Notification, Application, ApplicationG
   $rootScope.applicationGroups = applicationGroups;
 
   Application.query(function (applications) {
-    applications.forEach(function (application) {
-      applicationGroups.addApplication(application, true);
-    });
+      var appId = applications[0].id;
+      $location.url('/applications/' + appId + '/details');
   });
 
-  if (typeof (EventSource) !== 'undefined') {
-    // setups up the sse-reciever
-    $rootScope.journalEventSource = new EventSource('api/journal?stream');
-    $rootScope.$on('$destroy', function () {
-      $rootScope.journalEventSource.close();
-    });
-
-    $rootScope.journalEventSource.addEventListener('message', function (message) {
-      var event = JSON.parse(message.data);
-      Object.setPrototypeOf(event.application, Application.prototype);
-
-      var title = event.application.name;
-      var options = {
-        tag: event.application.id,
-        body: 'Instance ' + event.application.id + '\n' + event.application.healthUrl,
-        icon: require('./img/unknown.png'),
-        timeout: 10000,
-        url: $state.href('applications.details', {
-          id: event.application.id
-        })
-      };
-
-      if (event.type === 'REGISTRATION') {
-        applicationGroups.addApplication(event.application, false);
-        title += ' instance registered.';
-        options.tag = event.application.id + '-REGISTRY';
-      } else if (event.type === 'DEREGISTRATION') {
-        applicationGroups.removeApplication(event.application.id);
-        title += ' instance removed.';
-        options.tag = event.application.id + '-REGISTRY';
-      } else if (event.type === 'STATUS_CHANGE') {
-        applicationGroups.addApplication(event.application, true);
-        title += ' instance is ' + event.to.status;
-        options.tag = event.application.id + '-STATUS';
-        options.icon = event.to.status !== 'UP' ? require('./img/error.png') : require('./img/ok.png');
-        options.body = event.from.status + ' --> ' + event.to.status + '\n' + options.body;
-      }
-
-      $rootScope.$apply();
-      Notification.notify(title, options);
-    });
-  }
 });

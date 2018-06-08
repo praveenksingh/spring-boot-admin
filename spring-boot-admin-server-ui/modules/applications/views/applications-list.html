@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h3>Spring Actuator</h3>
+    <h3>Validate Internals</h3>
     <table class="table application-list">
         <thead>
         <tr>
@@ -28,7 +28,7 @@
             </td>
             <td class="version-column" ng-bind="application.info.build.version || application.info.version"></td>
             <td class="info-column scroll">
-                <sba-limited-text bind-html="application.info | yaml | linkify:60"></sba-limited-text>
+                <sba-limited-text max-lines="3" bind-html="application.info | yaml | linkify:60"></sba-limited-text>
             </td>
             <td class="status-column">
                 <div>

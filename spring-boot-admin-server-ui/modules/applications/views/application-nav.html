@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="application--title">
         <span class="status-{{application.statusInfo.status}}" ng-bind="application.statusInfo.status"></span>
-        {{application.name}} <small class="muted">({{application.id}})</small>
+        {{application.name}}
       </div>
       <ul class="application--urls">
         <li ng-if="application.healthUrl"><a href="{{ application.healthUrl }}" target="_blank" title="Health URL">{{ application.healthUrl }}<i class="fa fa-heartbeat fa-fw" ></i></a></li>
