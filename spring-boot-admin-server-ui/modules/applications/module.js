@@ -63,15 +63,7 @@ module.config(function ($stateProvider) {
   });
 });
 
-module.run(function ($rootScope, $state, Notification, Application, ApplicationGroups, MainViews, $location) {
-  MainViews.register({
-    title: 'Applications',
-    state: 'applications-list',
-    order: -100
-  });
-
-  var applicationGroups = new ApplicationGroups();
-  $rootScope.applicationGroups = applicationGroups;
+module.run(function ($rootScope, Application, $location) {
 
   Application.query(function (applications) {
       var appId = applications[0].id;
