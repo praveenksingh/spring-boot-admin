@@ -15,7 +15,7 @@
         <spring-cloud.version>Edgware.SR1</spring-cloud.version>
         <hystrix-dashboard.version>1.5.5</hystrix-dashboard.version>
 
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <resource.delimiter>@</resource.delimiter>

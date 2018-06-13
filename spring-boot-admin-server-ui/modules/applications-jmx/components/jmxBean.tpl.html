@@ -20,9 +20,10 @@
       		</label>
 			<div class="controls">
 				<div class="input-prepend">
-					<button class="btn" type="button" ng-click="$ctrl.writeAttributeValue(name)" ng-disabled="!attribute.descriptor.rw">write</button>
+					<button class="btn" type="button" ng-click="$ctrl.writeAttributeValue(name)"
+							ng-disabled="!attribute.descriptor.rw && $ctrl.bean.nameProps.type !== 'ConfigurationMBean'">write</button>
 					<sba-java-type-input sba-type="{{attribute.descriptor.type}}" sba-value="attribute.value" sba-change="$ctrl.updateAttributeValue(name, value, error)"
-						sba-disabled="!attribute.descriptor.rw"></sba-java-type-input>
+						sba-disabled="!attribute.descriptor.rw && $ctrl.bean.nameProps.type !== 'ConfigurationMBean'"></sba-java-type-input>
 				</div>
 				<span class="help-block" ng-bind="attribute.descriptor.desc"></span>
 				<span class="help-inline" ng-bind="attribute.error"></span>
