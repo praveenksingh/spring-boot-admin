@@ -20,7 +20,7 @@ module.exports = function ($scope, $http, application) {
 
   $scope.application = application;
   $scope.refreshSupported = false;
-  $scope.conf = "";
+  $scope.conf = undefined;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
@@ -51,12 +51,13 @@ module.exports = function ($scope, $http, application) {
   };
 
   $scope.loadApplicationConf = function(){
-    if ($scope.conf.length === 0) {
+    if ($scope.conf === undefined) {
       $scope.getApplicationConfiguration();
     }
   };
 
   $scope.getApplicationConfiguration = function(){
+    $scope.conf = "";
     application.getApplicationConfiguration().then(function (response) {
         $scope.conf = response.data;
     }).catch(function (response) {
