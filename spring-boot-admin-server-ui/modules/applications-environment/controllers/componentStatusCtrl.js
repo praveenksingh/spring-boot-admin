@@ -21,7 +21,6 @@ module.exports = function ($scope, $http, application) {
   $scope.application = application;
   $scope.refreshSupported = false;
   $scope.conf = "";
-  $scope.loadApplicationConf = loadApplicationConf;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
@@ -51,16 +50,19 @@ module.exports = function ($scope, $http, application) {
     });
   };
 
-  function loadApplicationConf(){
+  $scope.loadApplicationConf = function(){
     if ($scope.conf.length === 0) {
-      console.log("Called inside");
-      application.getApplicationConfiguration().then(function (response) {
-          $scope.conf = response.data;
-      }).catch(function (response) {
-          $scope.error = response.data;
-      });
+      $scope.getApplicationConfiguration();
     }
-  }
+  };
+
+  $scope.getApplicationConfiguration = function(){
+    application.getApplicationConfiguration().then(function (response) {
+        $scope.conf = response.data;
+    }).catch(function (response) {
+        $scope.error = response.data;
+    });
+  };
 
   $scope.refresh();
 };

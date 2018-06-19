@@ -11,7 +11,7 @@
 				</div>
 				<form class="form-inline input-append">
 					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-					<button class="btn" title="reload list" ng-click="refresh()"><i class="fa fa-repeat"></i></button>
+					<button class="btn" title="reload list" ng-click="getApplicationConfiguration()"><i class="fa fa-repeat"></i></button>
 				</form>
 				<sba-info-panel category="ConfigSource" panel-title="{{source.name}}" ng-repeat="source in conf" ng-show="!searchFilter || (source.properties | filter:searchFilter).length > 0">
 					<table class="table">
