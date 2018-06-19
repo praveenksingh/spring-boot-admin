@@ -68,18 +68,14 @@ module.exports = function ($scope, $http, application) {
     });
   };
 
-  function getBuildInformation(){
-    $scope.buildInfo = "";
-    application.getApplicationBuildInformation().then(function (response) {
-        $scope.buildInfo = response.data;
-    }).catch(function (response) {
-        $scope.buildInfo = response.data;
-    });
-  }
-
   function loadBuildInformation(){
     if ($scope.buildInfo === undefined) {
-        $scope.getBuildInformation();
+      $scope.buildInfo = "";
+      application.getApplicationBuildInformation().then(function (response) {
+          $scope.buildInfo = response.data;
+      }).catch(function (response) {
+          $scope.buildInfo = response.data;
+      });
     }
   }
 
