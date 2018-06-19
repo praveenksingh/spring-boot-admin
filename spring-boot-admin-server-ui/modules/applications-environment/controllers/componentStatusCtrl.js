@@ -21,6 +21,9 @@ module.exports = function ($scope, $http, application) {
   $scope.application = application;
   $scope.refreshSupported = false;
   $scope.conf = undefined;
+  $scope.buildInfo = undefined;
+  $scope.loadBuildInformation = loadBuildInformation;
+  $scope.getBuildInformation = getBuildInformation;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
@@ -64,6 +67,21 @@ module.exports = function ($scope, $http, application) {
         $scope.error = response.data;
     });
   };
+
+  function getBuildInformation(){
+    $scope.buildInfo = "";
+    application.getApplicationBuildInformation().then(function (response) {
+        $scope.buildInfo = response.data;
+    }).catch(function (response) {
+        $scope.buildInfo = response.data;
+    });
+  }
+
+  function loadBuildInformation(){
+    if ($scope.buildInfo === undefined) {
+        $scope.getBuildInformation();
+    }
+  }
 
   $scope.refresh();
 };

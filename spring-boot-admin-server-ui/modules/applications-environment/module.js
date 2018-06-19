@@ -27,7 +27,7 @@ module.component('sbaEnvironmentManager', require('./components/environmentManag
 module.config(function ($stateProvider) {
   $stateProvider.state('applications.componentStatus', {
     url: '/properties',
-    templateUrl: 'applications-environment/views/environment.html',
+    templateUrl: 'applications-environment/views/component-status.html',
     controller: 'componentStatusCtrl'
   });
 });

@@ -32,6 +32,33 @@
 		</sba-accordion-group>
 		<!-- End Application Configuration -->
 
+		<!-- Application Build Information-->
+		<sba-accordion-group>
+			<sba-accordion-heading>
+				<a ng-click="loadBuildInformation()">Application Build Information</a>
+			</sba-accordion-heading>
+			<sba-accordion-body>
+				<div class="alert alert-error" ng-if="error">
+					<b>Error:</b> {{ error }}
+				</div>
+				<form class="form-inline input-append">
+					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+					<button class="btn" title="reload list" ng-click="getBuildInformation()"><i class="fa fa-repeat"></i></button>
+				</form>
+				<sba-info-panel panel-title="Build Info" ng-show="!searchFilter || ((key, value) in buildInfo | filter:searchFilter).length > 0">
+					<table class="table">
+						<col width="35%">
+						<col width="65%">
+						<tr ng-repeat="(key, value) in buildInfo | filter:searchFilter">
+							<td style="word-break: break-all;">{{key}}</td>
+							<td style="word-break: break-all;">{{value}}</td>
+						</tr>
+					</table>
+				</sba-info-panel>
+			</sba-accordion-body>
+		</sba-accordion-group>
+		<!-- End Application Build Information -->
+
 		<!-- Environment Properties-->
 		<sba-accordion-group>
 			<sba-accordion-heading>
