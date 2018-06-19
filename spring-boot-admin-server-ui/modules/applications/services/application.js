@@ -84,5 +84,9 @@ module.exports = function ($resource, $http) {
     return $http.post('api/applications/' + this.id + '/loggers/' + logger, { configuredLevel: level });
   };
 
+  Application.prototype.getApplicationConfiguration = function () {
+    return $http.get('v1/springactuatorserv/api/getApplicationConfiguration').then(convert);
+  };
+
   return Application;
 };
