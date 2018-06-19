@@ -13,35 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+// 'use strict';
 
-var angular = require('angular');
+// var angular = require('angular');
 
-var module = angular.module('sba-applications-auditevents', ['sba-applications']);
-global.sbaModules.push(module.name);
+// var module = angular.module('sba-applications-auditevents', ['sba-applications']);
+// global.sbaModules.push(module.name);
 
-module.controller('auditeventsCtrl', require('./auditeventsCtrl.js'));
-module.component('sbaAuditevent', require('./components/auditevent.js'));
+// module.controller('auditeventsCtrl', require('./auditeventsCtrl.js'));
+// module.component('sbaAuditevent', require('./components/auditevent.js'));
+//
+// module.config(function ($stateProvider) {
+//   $stateProvider.state('applications.auditevents', {
+//     url: '/auditevents',
+//     templateUrl: 'applications-auditevents/auditevents.html',
+//     controller: 'auditeventsCtrl'
+//   });
+// });
 
-module.config(function ($stateProvider) {
-  $stateProvider.state('applications.auditevents', {
-    url: '/auditevents',
-    templateUrl: 'applications-auditevents/auditevents.html',
-    controller: 'auditeventsCtrl'
-  });
-});
-
-module.run(function (ApplicationViews, $sce, $http) {
-  ApplicationViews.register({
-    order: 55,
-    title: $sce.trustAsHtml('<i class="fa fa-user-circle-o fa-fw"></i>Audit'),
-    state: 'applications.auditevents',
-    show: function (application) {
-      return $http.head('api/applications/' + application.id + '/auditevents').then(function () {
-        return true;
-      }).catch(function () {
-        return false;
-      });
-    }
-  });
-});
+// module.run(function (ApplicationViews, $sce, $http) {
+//   ApplicationViews.register({
+//     order: 55,
+//     title: $sce.trustAsHtml('<i class="fa fa-user-circle-o fa-fw"></i>Audit'),
+//     state: 'applications.auditevents',
+//     show: function (application) {
+//       return $http.head('api/applications/' + application.id + '/auditevents').then(function () {
+//         return true;
+//       }).catch(function () {
+//         return false;
+//       });
+//     }
+//   });
+// });

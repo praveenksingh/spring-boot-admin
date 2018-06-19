@@ -20,23 +20,23 @@ var angular = require('angular');
 var module = angular.module('sba-applications-environment', ['sba-applications']);
 global.sbaModules.push(module.name);
 
-module.controller('environmentCtrl', require('./controllers/environmentCtrl.js'));
+module.controller('componentStatusCtrl', require('./controllers/componentStatusCtrl.js'));
 
 module.component('sbaEnvironmentManager', require('./components/environmentManager.js'));
 
 module.config(function ($stateProvider) {
-  $stateProvider.state('applications.environment', {
-    url: '/environment',
+  $stateProvider.state('applications.componentStatus', {
+    url: '/properties',
     templateUrl: 'applications-environment/views/environment.html',
-    controller: 'environmentCtrl'
+    controller: 'componentStatusCtrl'
   });
 });
 
 module.run(function (ApplicationViews, $http, $sce) {
   ApplicationViews.register({
     order: 10,
-    title: $sce.trustAsHtml('<i class="fa fa-server fa-fw"></i>Environment'),
-    state: 'applications.environment',
+    title: $sce.trustAsHtml('<i class="fa fa-server fa-fw"></i>Component Status'),
+    state: 'applications.componentStatus',
     show: function (application) {
       return $http.head('api/applications/' + application.id + '/env').then(function () {
         return true;
