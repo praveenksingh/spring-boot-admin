@@ -22,7 +22,9 @@ module.exports = function ($scope, $http, application) {
   $scope.refreshSupported = false;
   $scope.conf = undefined;
   $scope.buildInfo = undefined;
+  $scope.cmdStHndlrCmptStatInfo = undefined;
   $scope.loadBuildInformation = loadBuildInformation;
+  $scope.loadCommandStageHandlerComponentStatus = loadCommandStageHandlerComponentStatus;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
@@ -74,6 +76,17 @@ module.exports = function ($scope, $http, application) {
           $scope.buildInfo = response.data;
       }).catch(function (response) {
           $scope.buildInfo = response.data;
+      });
+    }
+  }
+
+  function loadCommandStageHandlerComponentStatus(){
+    if ($scope.cmdStHndlrCmptStatInfo === undefined) {
+      $scope.cmdStHndlrCmptStatInfo = "";
+      application.loadCommandStageHandlerComponentStatus().then(function (response) {
+          $scope.cmdStHndlrCmptStatInfo = response.data;
+      }).catch(function (response) {
+          $scope.cmdStHndlrCmptStatInfo = response.data;
       });
     }
   }
