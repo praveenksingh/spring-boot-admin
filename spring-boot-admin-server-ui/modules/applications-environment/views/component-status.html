@@ -1,6 +1,6 @@
 <div class="container">
 	<sba-accordion>
-		<!-- Application Configuration-->
+		<!-- Begin Application Configuration-->
 		<sba-accordion-group>
 			<sba-accordion-heading>
 				<a ng-click="loadApplicationConf()">Application Configuration</a>
@@ -39,7 +39,7 @@
 		</sba-accordion-group>
 		<!-- End Application Configuration -->
 
-		<!-- Application Build Information-->
+		<!-- Begin Application Build Information-->
 		<sba-accordion-group>
 			<sba-accordion-heading>
 				<a ng-click="loadBuildInformation()">Application Build Information</a>
@@ -48,23 +48,28 @@
 				<div class="alert alert-error" ng-if="error">
 					<b>Error:</b> {{ error }}
 				</div>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col" width="35%">Metric</th>
-							<th scope="col" width="65%">Value</th>
+				<form class="form-inline input-append">
+					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+				</form>
+				<div ng-show="!searchFilter || (buildInfo | filter:searchFilter).length > 0">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col" width="35%">Metric</th>
+								<th scope="col" width="65%">Value</th>
+							</tr>
+						</thead>
+						<tr ng-repeat="property in buildInfo | filter:searchFilter">
+							<td style="word-break: break-all;">{{ property.key }}</td>
+							<td style="word-break: break-all;">{{ property.value }}</td>
 						</tr>
-					</thead>
-					<tr ng-repeat="(key, value) in buildInfo">
-						<td style="word-break: break-all;">{{ key }}</td>
-						<td style="word-break: break-all;">{{ value }}</td>
-					</tr>
-				</table>
+					</table>
+				</div>
 			</sba-accordion-body>
 		</sba-accordion-group>
 		<!-- End Application Build Information -->
 
-		<!-- Environment Properties-->
+		<!-- Begin Environment Properties-->
 		<sba-accordion-group>
 			<sba-accordion-heading>
 				<a>Environment Properties</a>
@@ -96,6 +101,8 @@
 			</sba-accordion-body>
 		</sba-accordion-group>
 		<!-- End Environment Properties -->
+
+
 	</sba-accordion>
 
 </div>
