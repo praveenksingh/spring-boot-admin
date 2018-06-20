@@ -23,7 +23,6 @@ module.exports = function ($scope, $http, application) {
   $scope.conf = undefined;
   $scope.buildInfo = undefined;
   $scope.loadBuildInformation = loadBuildInformation;
-  $scope.getBuildInformation = getBuildInformation;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
