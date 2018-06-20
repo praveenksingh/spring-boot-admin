@@ -73,7 +73,7 @@ module.exports = function ($scope, $http, application) {
     if ($scope.buildInfo === undefined) {
       $scope.buildInfo = "";
       application.getApplicationBuildInformation().then(function (response) {
-          $scope.buildInfo = response.data;
+          $scope.buildInfo = toArray(response.data[0]);
       }).catch(function (response) {
           $scope.buildInfo = response.data;
       });

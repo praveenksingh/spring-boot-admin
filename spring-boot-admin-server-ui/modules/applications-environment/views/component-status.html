@@ -51,7 +51,7 @@
 				<form class="form-inline input-append">
 					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
 				</form>
-				<div ng-repeat="info in buildInfo">
+				<div ng-show="!searchFilter || (buildInfo | filter:searchFilter).length > 0">
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -59,9 +59,9 @@
 								<th scope="col" width="65%">Value</th>
 							</tr>
 						</thead>
-						<tr ng-repeat="(key, value) in info">
-							<td style="word-break: break-all;">{{ key }}</td>
-							<td style="word-break: break-all;">{{ value }}</td>
+						<tr ng-repeat="info in buildInfo | filter:searchFilter">
+							<td style="word-break: break-all;">{{ info.name }}</td>
+							<td style="word-break: break-all;">{{ info.value }}</td>
 						</tr>
 					</table>
 				</div>
@@ -116,14 +116,14 @@
 					<thead>
 					<tr>
 						<th scope="col" width="25%">StageId</th>
-						<th scope="col" width="25%">Handler Class</th>
-						<th scope="col" width="50%">Handler Name</th>
+						<th scope="col" width="25%">Handler Name</th>
+						<th scope="col" width="50%">Handler Class</th>
 					</tr>
 					</thead>
 					<tr ng-repeat="info in cmdStHndlrCmptStatInfo">
 						<td style="word-break: break-all;">{{ info['StageId'] }}</td>
-						<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>
 						<td style="word-break: break-all;">{{ info['Handler Name'] }}</td>
+						<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>
 					</tr>
 				</table>
             </sba-accordion-body>
