@@ -14,7 +14,14 @@
 					<button class="btn" title="reload list" ng-click="getApplicationConfiguration()"><i class="fa fa-repeat"></i></button>
 				</form>
 				<sba-info-panel category="ConfigSource" panel-title="{{source.name}}" ng-repeat="source in conf" ng-show="!searchFilter || (source.properties | filter:searchFilter).length > 0">
-					<table class="table">
+					<table class="table table-hover">
+						<thead>
+						<tr>
+							<th scope="col" width="25%">Key</th>
+							<th scope="col" width="55%">Value</th>
+							<th scope="col" width="20%">Origin</th>
+						</tr>
+						</thead>
 						<col width="25%">
 						<col width="55%">
 						<col width="20%">
@@ -41,16 +48,18 @@
 				<div class="alert alert-error" ng-if="error">
 					<b>Error:</b> {{ error }}
 				</div>
-				<sba-info-panel panel-title="Build Info"> <!-- ng-show="!searchFilter || ((key, value) in buildInfo | filter:searchFilter).length > 0"> -->
-					<table class="table">
-						<col width="35%">
-						<col width="65%">
-						<tr ng-repeat="(key, value) in buildInfo">
-							<td style="word-break: break-all;">{{ key }}</td>
-							<td style="word-break: break-all;">{{ value }}</td>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col" width="35%">Metric</th>
+							<th scope="col" width="65%">Value</th>
 						</tr>
-					</table>
-				</sba-info-panel>
+					</thead>
+					<tr ng-repeat="(key, value) in buildInfo">
+						<td style="word-break: break-all;">{{ key }}</td>
+						<td style="word-break: break-all;">{{ value }}</td>
+					</tr>
+				</table>
 			</sba-accordion-body>
 		</sba-accordion-group>
 		<!-- End Application Build Information -->
@@ -72,7 +81,7 @@
 					<sba-environment-manager environment="env" application="application" on-environment-changed="refresh"></sba-environment-manager>
 				</sba-info-panel>
 				<sba-info-panel category="PropertySource" panel-title="{{source.name}}" ng-repeat="source in env" ng-show="!searchFilter || (source.value | filter:searchFilter).length > 0">
-					<table class="table">
+					<table class="table table-hover">
 						<col width="35%">
 						<col width="65%">
 						<tr ng-repeat="property in source.value | filter:searchFilter">
