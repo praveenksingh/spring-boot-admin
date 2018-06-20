@@ -104,5 +104,9 @@ module.exports = function ($resource, $http) {
     return $http.get('v1/springactuatorserv/api/getRaptorCommandHandlerComponentStatus').then(convert);
   };
 
+  Application.prototype.getRaptorBundleComponentStatus = function () {
+    return $http.get('v1/springactuatorserv/api/getRaptorBundlesComponentStatus').then(convert);
+  };
+
   return Application;
 };

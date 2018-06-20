@@ -25,9 +25,11 @@ module.exports = function ($scope, $http, application) {
   $scope.hostInfo = undefined;
   $scope.cmdStHndlrCmptStatInfo = undefined;
   $scope.raptorCmdHndlrCmptStat = undefined;
+  $scope.raptorBundleCmptStat = undefined;
   $scope.loadBuildInformation = loadBuildInformation;
   $scope.loadHostInformation = loadHostInformation;
   $scope.loadCommandStageHandlerComponentStatus = loadCommandStageHandlerComponentStatus;
+  $scope.loadRaptorBundleComponentStatus = loadRaptorBundleComponentStatus;
   $scope.loadRaptorCommandHandlerComponentStatus = loadRaptorCommandHandlerComponentStatus;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
@@ -106,12 +108,22 @@ module.exports = function ($scope, $http, application) {
     }
   }
 
+  function loadRaptorBundleComponentStatus(){
+    if ($scope.raptorBundleCmptStat === undefined) {
+      $scope.raptorBundleCmptStat = "";
+      application.getRaptorBundleComponentStatus().then(function (response) {
+        $scope.raptorBundleCmptStat = response.data;
+      }).catch(function (response) {
+        $scope.error = response.data;
+      });
+    }
+  }
+
   function loadRaptorCommandHandlerComponentStatus(){
     if ($scope.raptorCmdHndlrCmptStat === undefined) {
       $scope.raptorCmdHndlrCmptStat = "";
       application.getRaptorCommandHandlerComponentStatus().then(function (response) {
         $scope.raptorCmdHndlrCmptStat = response.data;
-        console.log($scope.raptorCmdHndlrCmptStat);
       }).catch(function (response) {
         $scope.error = response.data;
       });

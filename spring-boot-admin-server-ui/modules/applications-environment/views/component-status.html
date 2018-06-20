@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 	<sba-accordion>
 		<!-- Begin Application Configuration-->
 		<sba-accordion-group>
@@ -16,15 +16,12 @@
 				<sba-info-panel category="ConfigSource" panel-title="{{source.name}}" ng-repeat="source in conf" ng-show="!searchFilter || (source.properties | filter:searchFilter).length > 0">
 					<table class="table table-hover">
 						<thead>
-						<tr>
-							<th scope="col" width="25%">Key</th>
-							<th scope="col" width="55%">Value</th>
-							<th scope="col" width="20%">Origin</th>
-						</tr>
+							<tr>
+								<th scope="col" width="30%">Key</th>
+								<th scope="col" width="55%">Value</th>
+								<th scope="col" width="15%">Origin</th>
+							</tr>
 						</thead>
-						<col width="25%">
-						<col width="55%">
-						<col width="20%">
 						<tr ng-repeat="property in source.properties | filter:searchFilter">
 							<td style="word-break: break-all;">{{property.key}}</td>
 							<td style="word-break: break-all;">{{property.value}}</td>
@@ -161,6 +158,55 @@
             </sba-accordion-body>
         </sba-accordion-group>
 		<!-- End Command Stage Handler Component Status -->
+
+		<!-- Begin RaptorBundleComponentStatus-->
+		<sba-accordion-group>
+			<sba-accordion-heading>
+				<a ng-click="loadRaptorBundleComponentStatus()">RaptorBundlesComponentStatus</a>
+			</sba-accordion-heading>
+			<sba-accordion-body>
+				<div class="alert alert-error" ng-if="error">
+					<b>Error:</b> {{ error }}
+				</div>
+				<form class="form-inline input-append">
+					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+				</form>
+				<div ng-show="!searchFilter || (raptorBundleCmptStat | filter:searchFilter).length > 0">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr align="center" class="text-center">
+									<th colspan="3">Bundle</th>
+									<th colspan="3">SCM</th>
+									<th colspan="2">Init</th>
+								</tr>
+								<tr>
+									<th scope="col">Symbolic Name</th>
+									<th scope="col">Version</th>
+									<th scope="col">Top?</th>
+									<th scope="col">URL</th>
+									<th scope="col">Tag/Commit ID</th>
+									<th scope="col">Branch</th>
+									<th scope="col">Success</th>
+									<th scope="col">Messages</th>
+								</tr>
+							</thead>
+							<tr ng-repeat="info in raptorBundleCmptStat | filter:searchFilter">
+								<td style="word-break: break-all;">{{ info['Bundle Symbolic Name'] }}</td>
+								<td style="word-break: break-all;">{{ info['Bundle Version'] }}</td>
+								<td style="word-break: break-all;">{{ info['Top Level?'] }}</td>
+								<td style="word-break: break-all;">{{ info['SCM URL'] }}</td>
+								<td style="word-break: break-all;">{{ info['Tag/Commit ID'] }}</td>
+								<td style="word-break: break-all;">{{ info['Branch'] }}</td>
+								<td style="word-break: break-all;">{{ info['Init Success?'] }}</td>
+								<td style="word-break: break-all;">{{ info['Init Messages'] }}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</sba-accordion-body>
+		</sba-accordion-group>
+		<!-- End RaptorBundleComponentStatus -->
 
 		<!-- Begin RaptorCommandHandlerComponentStatus-->
 		<sba-accordion-group>
