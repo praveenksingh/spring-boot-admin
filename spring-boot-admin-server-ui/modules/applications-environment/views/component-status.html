@@ -71,6 +71,36 @@
 		</sba-accordion-group>
 		<!-- End Application Build Information -->
 
+		<!-- Begin Host Information-->
+		<sba-accordion-group>
+			<sba-accordion-heading>
+				<a ng-click="loadHostInformation()">Host Information</a>
+			</sba-accordion-heading>
+			<sba-accordion-body>
+				<div class="alert alert-error" ng-if="error">
+					<b>Error:</b> {{ error }}
+				</div>
+				<form class="form-inline input-append">
+					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+				</form>
+				<div ng-show="!searchFilter || (hostInfo | filter:searchFilter).length > 0">
+					<table class="table table-hover">
+						<thead>
+						<tr>
+							<th scope="col" width="35%">Metric</th>
+							<th scope="col" width="65%">Value</th>
+						</tr>
+						</thead>
+						<tr ng-repeat="info in hostInfo | filter:searchFilter">
+							<td style="word-break: break-all;">{{ info.name }}</td>
+							<td style="word-break: break-all;">{{ info.value }}</td>
+						</tr>
+					</table>
+				</div>
+			</sba-accordion-body>
+		</sba-accordion-group>
+		<!-- End Host Information -->
+
 		<!-- Begin Environment Properties-->
 		<sba-accordion-group>
 			<sba-accordion-heading>
@@ -156,11 +186,14 @@
 						<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>
 						<td style="word-break: break-all;">{{ info['Handler Position'] }}</td>
 					</tr>
-
 				</table>
 			</sba-accordion-body>
 		</sba-accordion-group>
 		<!-- End RaptorCommandHandlerComponentStatus -->
+
+
+
+
 	</sba-accordion>
 
 </div>

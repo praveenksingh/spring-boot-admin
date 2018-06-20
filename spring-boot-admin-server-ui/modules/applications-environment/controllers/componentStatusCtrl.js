@@ -22,9 +22,11 @@ module.exports = function ($scope, $http, application) {
   $scope.refreshSupported = false;
   $scope.conf = undefined;
   $scope.buildInfo = undefined;
+  $scope.hostInfo = undefined;
   $scope.cmdStHndlrCmptStatInfo = undefined;
   $scope.raptorCmdHndlrCmptStat = undefined;
   $scope.loadBuildInformation = loadBuildInformation;
+  $scope.loadHostInformation = loadHostInformation;
   $scope.loadCommandStageHandlerComponentStatus = loadCommandStageHandlerComponentStatus;
   $scope.loadRaptorCommandHandlerComponentStatus = loadRaptorCommandHandlerComponentStatus;
 
@@ -78,6 +80,17 @@ module.exports = function ($scope, $http, application) {
           $scope.buildInfo = toArray(response.data[0]);
       }).catch(function (response) {
           $scope.error = response.data;
+      });
+    }
+  }
+
+  function loadHostInformation(){
+    if ($scope.hostInfo === undefined) {
+      $scope.hostInfo = "";
+      application.getHostInformation().then(function (response) {
+        $scope.hostInfo = toArray(response.data[0]);
+      }).catch(function (response) {
+        $scope.error = response.data;
       });
     }
   }
