@@ -92,8 +92,12 @@ module.exports = function ($resource, $http) {
       return $http.get('v1/springactuatorserv/api/getApplicationBuildInformation').then(convert);
   };
 
-  Application.prototype.loadCommandStageHandlerComponentStatus = function () {
+  Application.prototype.getCommandStageHandlerComponentStatus = function () {
     return $http.get('v1/springactuatorserv/api/getCommandStageHandlerComponentStatus').then(convert);
+  };
+
+  Application.prototype.getRaptorCommandHandlerComponentStatus = function () {
+    return $http.get('v1/springactuatorserv/api/getRaptorCommandHandlerComponentStatus').then(convert);
   };
 
   return Application;

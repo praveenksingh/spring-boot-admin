@@ -62,6 +62,8 @@
 						<tr ng-repeat="info in buildInfo | filter:searchFilter">
 							<td style="word-break: break-all;">{{ info.name }}</td>
 							<td style="word-break: break-all;">{{ info.value }}</td>
+							<!--<td style="word-break: break-all;" ng-show="info.value.indexOf('http://') == 0 ||info.value.indexOf('https://') == 0"><a>{{ info.value }}</a></td>-->
+							<!--<td style="word-break: break-all;" ng-hide="info.value.indexOf('http://' == 0) || info.value.indexOf('https://') == 0">{{ info.value }}</td>-->
 						</tr>
 					</table>
 				</div>
@@ -129,6 +131,36 @@
             </sba-accordion-body>
         </sba-accordion-group>
 		<!-- End Command Stage Handler Component Status -->
+
+		<!-- Begin RaptorCommandHandlerComponentStatus-->
+		<sba-accordion-group>
+			<sba-accordion-heading>
+				<a ng-click="loadRaptorCommandHandlerComponentStatus()">RaptorCommandHandlerComponentStatus</a>
+			</sba-accordion-heading>
+			<sba-accordion-body>
+				<div class="alert alert-error" ng-if="error">
+					<b>Error:</b> {{ error }}
+				</div>
+				<table class="table table-hover">
+					<thead>
+					<tr>
+						<th scope="col" width="20%">StageId</th>
+						<th scope="col" width="20%">Handler Name</th>
+						<th scope="col" width="50%">Handler Class</th>
+						<th scope="col" width="10%">Handler Position [1-100]</th>
+					</tr>
+					</thead>
+					<tr ng-repeat="info in raptorCmdHndlrCmptStat">
+						<td style="word-break: break-all;">{{ info['StageId'] }}</td>
+						<td style="word-break: break-all;">{{ info['Handler Name'] }}</td>
+						<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>
+						<td style="word-break: break-all;">{{ info['Handler Position'] }}</td>
+					</tr>
+
+				</table>
+			</sba-accordion-body>
+		</sba-accordion-group>
+		<!-- End RaptorCommandHandlerComponentStatus -->
 	</sba-accordion>
 
 </div>

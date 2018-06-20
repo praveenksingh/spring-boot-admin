@@ -23,8 +23,10 @@ module.exports = function ($scope, $http, application) {
   $scope.conf = undefined;
   $scope.buildInfo = undefined;
   $scope.cmdStHndlrCmptStatInfo = undefined;
+  $scope.raptorCmdHndlrCmptStat = undefined;
   $scope.loadBuildInformation = loadBuildInformation;
   $scope.loadCommandStageHandlerComponentStatus = loadCommandStageHandlerComponentStatus;
+  $scope.loadRaptorCommandHandlerComponentStatus = loadRaptorCommandHandlerComponentStatus;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
@@ -75,7 +77,7 @@ module.exports = function ($scope, $http, application) {
       application.getApplicationBuildInformation().then(function (response) {
           $scope.buildInfo = toArray(response.data[0]);
       }).catch(function (response) {
-          $scope.buildInfo = response.data;
+          $scope.error = response.data;
       });
     }
   }
@@ -83,10 +85,22 @@ module.exports = function ($scope, $http, application) {
   function loadCommandStageHandlerComponentStatus(){
     if ($scope.cmdStHndlrCmptStatInfo === undefined) {
       $scope.cmdStHndlrCmptStatInfo = "";
-      application.loadCommandStageHandlerComponentStatus().then(function (response) {
-          $scope.cmdStHndlrCmptStatInfo = response.data;
+      application.getCommandStageHandlerComponentStatus().then(function (response) {
+        $scope.cmdStHndlrCmptStatInfo = response.data;
       }).catch(function (response) {
-          $scope.cmdStHndlrCmptStatInfo = response.data;
+        $scope.error = response.data;
+      });
+    }
+  }
+
+  function loadRaptorCommandHandlerComponentStatus(){
+    if ($scope.raptorCmdHndlrCmptStat === undefined) {
+      $scope.raptorCmdHndlrCmptStat = "";
+      application.getRaptorCommandHandlerComponentStatus().then(function (response) {
+        $scope.raptorCmdHndlrCmptStat = response.data;
+        console.log($scope.raptorCmdHndlrCmptStat);
+      }).catch(function (response) {
+        $scope.error = response.data;
       });
     }
   }
