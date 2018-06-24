@@ -26,11 +26,15 @@ module.exports = function ($scope, $http, application) {
   $scope.cmdStHndlrCmptStatInfo = undefined;
   $scope.raptorCmdHndlrCmptStat = undefined;
   $scope.raptorBundleCmptStat = undefined;
+  $scope.javaCalServInfo = undefined;
+  $scope.javaCpuTimeStats = undefined;
   $scope.loadBuildInformation = loadBuildInformation;
   $scope.loadHostInformation = loadHostInformation;
+  $scope.loadJavaCpuTimeStats = loadJavaCpuTimeStats;
   $scope.loadCommandStageHandlerComponentStatus = loadCommandStageHandlerComponentStatus;
   $scope.loadRaptorBundleComponentStatus = loadRaptorBundleComponentStatus;
   $scope.loadRaptorCommandHandlerComponentStatus = loadRaptorCommandHandlerComponentStatus;
+  $scope.loadJavaCalServiceInformation = loadJavaCalServiceInformation;
 
   $http.head('api/applications/' + application.id + '/refresh').catch(function (response) {
     $scope.refreshSupported = response.status === 405; //If method not allowed is returned the endpoint is present.
@@ -124,6 +128,28 @@ module.exports = function ($scope, $http, application) {
       $scope.raptorCmdHndlrCmptStat = "";
       application.getRaptorCommandHandlerComponentStatus().then(function (response) {
         $scope.raptorCmdHndlrCmptStat = response.data;
+      }).catch(function (response) {
+        $scope.error = response.data;
+      });
+    }
+  }
+
+  function loadJavaCalServiceInformation(){
+    if ($scope.javaCalServInfo === undefined) {
+      $scope.javaCalServInfo = "";
+      application.getJavaCalServiceInformation().then(function (response) {
+        $scope.javaCalServInfo = response.data;
+      }).catch(function (response) {
+        $scope.error = response.data;
+      });
+    }
+  }
+
+  function loadJavaCpuTimeStats(){
+    if ($scope.javaCpuTimeStats === undefined) {
+      $scope.javaCpuTimeStats = "";
+      application.getJavaCpuTimeStats().then(function (response) {
+        $scope.javaCpuTimeStats = response.data;
       }).catch(function (response) {
         $scope.error = response.data;
       });

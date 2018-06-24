@@ -108,5 +108,13 @@ module.exports = function ($resource, $http) {
     return $http.get('v1/springactuatorserv/api/getRaptorBundlesComponentStatus').then(convert);
   };
 
+  Application.prototype.getJavaCalServiceInformation = function () {
+    return $http.get('v1/springactuatorserv/api/getJavaCalServiceInfo').then(convert);
+  };
+
+  Application.prototype.getJavaCpuTimeStats = function () {
+    return $http.get('v1/springactuatorserv/api/getJavaCpuTimeStats').then(convert);
+  };
+
   return Application;
 };
