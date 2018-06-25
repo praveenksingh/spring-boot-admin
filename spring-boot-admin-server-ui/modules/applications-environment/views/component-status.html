@@ -1,5 +1,61 @@
 <div class="container-fluid">
 	<sba-accordion>
+		<!-- Begin Aero Hystrix Statistics-->
+		<sba-accordion-group>
+			<sba-accordion-heading>
+				<a ng-click="loadAeroHystrixComponentStatus()">Aero Hystrix Statistics</a>
+			</sba-accordion-heading>
+			<sba-accordion-body>
+				<div class="alert alert-error" ng-if="error">
+					<b>Error:</b> {{ error }}
+				</div>
+				<form class="form-inline input-append">
+					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+					<button class="btn" title="reload list" ng-click="getAeroHystrixComponentStatus(false)"><i class="fa fa-repeat"></i></button>
+					<button class="btn" title="reset" ng-click="getAeroHystrixComponentStatus(true)"><i class="fas fa-power-off"></i></button>
+				</form>
+				<!--<div ng-show="!searchFilter || (aeroHystrixInfo | filter:searchFilter).length > 0">-->
+					<table class="table table-hover">
+						<thead>
+						<tr>
+							<th scope="col">Command Name</th>
+							<th scope="col">Circuit Breaker Status</th>
+							<th scope="col">Total Count</th>
+							<th scope="col">Average Latency(ms)</th>
+							<th scope="col">Success Count</th>
+							<th scope="col">Error Count</th>
+							<th scope="col">Failure Count</th>
+							<th scope="col">ShortCircuited Count</th>
+							<th scope="col">Semaphore Rejected Count</th>
+							<th scope="col">ThreadPool Rejected Count</th>
+							<th scope="col">Timeout Count</th>
+							<th scope="col">FallBack Success Count</th>
+							<th scope="col">FallBack Failure Count</th>
+							<th scope="col">FallBack Rejected Count</th>
+						</tr>
+						</thead>
+						<tr ng-repeat="(key, value) in aeroHystrixInfo">
+							<td style="word-break: break-all;">{{ key }}</td>
+							<td style="word-break: break-all;">{{ value['circuitBreakerStatus'] }}</td>
+							<td style="word-break: break-all;">{{ value['totalCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['averageLatency'] }}</td>
+							<td style="word-break: break-all;">{{ value['successCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['errorCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['failureCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['shortCircuitedCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['semaphoreRejectedCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['threadPoolRejectedCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['timeoutCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['fallBackSucessCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['fallBackFailureCount'] }}</td>
+							<td style="word-break: break-all;">{{ value['fallBackRejectedCount'] }}</td>
+						</tr>
+					</table>
+				<!--</div>-->
+			</sba-accordion-body>
+		</sba-accordion-group>
+		<!-- End Application Build Information -->
+
 		<!-- Begin Application Configuration-->
 		<sba-accordion-group>
 			<sba-accordion-heading>

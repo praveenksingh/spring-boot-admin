@@ -88,6 +88,10 @@ module.exports = function ($resource, $http) {
     return $http.get('v1/springactuatorserv/api/getApplicationConfiguration').then(convert);
   };
 
+  Application.prototype.getAeroHystrixComponentStats = function (reset) {
+    return $http.get('v1/springactuatorserv/api/getAeroHystrixComponentStats', {params: { reset: reset }}).then(convert);
+  };
+
   Application.prototype.getApplicationBuildInformation = function () {
     return $http.get('v1/springactuatorserv/api/getApplicationBuildInformation').then(convert);
   };

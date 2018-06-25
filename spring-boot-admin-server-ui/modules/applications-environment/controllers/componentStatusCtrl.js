@@ -28,6 +28,9 @@ module.exports = function ($scope, $http, application) {
   $scope.raptorBundleCmptStat = undefined;
   $scope.javaCalServInfo = undefined;
   $scope.javaCpuTimeStats = undefined;
+  $scope.aeroHystrixInfo = undefined;
+  $scope.loadAeroHystrixComponentStatus = loadAeroHystrixComponentStatus;
+  $scope.getAeroHystrixComponentStatus = getAeroHystrixComponentStatus;
   $scope.loadBuildInformation = loadBuildInformation;
   $scope.loadHostInformation = loadHostInformation;
   $scope.loadJavaCpuTimeStats = loadJavaCpuTimeStats;
@@ -63,6 +66,22 @@ module.exports = function ($scope, $http, application) {
       $scope.error = response.data;
     });
   };
+
+  function loadAeroHystrixComponentStatus(){
+    if ($scope.aeroHystrixInfo === undefined) {
+      $scope.getAeroHystrixComponentStatus(false);
+    }
+  }
+
+  function  getAeroHystrixComponentStatus(reset){
+    $scope.aeroHystrixInfo = "";
+    application.getAeroHystrixComponentStats(reset).then(function (response) {
+      $scope.aeroHystrixInfo = response.data;
+      console.log($scope.aeroHystrixInfo);
+    }).catch(function (response) {
+      $scope.error = response.data;
+    });
+  }
 
   $scope.loadApplicationConf = function(){
     if ($scope.conf === undefined) {
