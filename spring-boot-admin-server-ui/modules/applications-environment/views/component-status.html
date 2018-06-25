@@ -14,7 +14,7 @@
 					<button class="btn" title="reload list" ng-click="getAeroHystrixComponentStatus(false)"><i class="fa fa-repeat"></i></button>
 					<button class="btn" title="reset" ng-click="getAeroHystrixComponentStatus(true)"><i class="fas fa-power-off"></i></button>
 				</form>
-				<!--<div ng-show="!searchFilter || (aeroHystrixInfo | filter:searchFilter).length > 0">-->
+				<div ng-show="!searchFilter || (aeroHystrixInfo | filter:searchFilter).length > 0">
 					<table class="table table-hover">
 						<thead>
 						<tr>
@@ -34,8 +34,8 @@
 							<th scope="col">FallBack Rejected Count</th>
 						</tr>
 						</thead>
-						<tr ng-repeat="(key, value) in aeroHystrixInfo">
-							<td style="word-break: break-all;">{{ key }}</td>
+						<tr ng-repeat="value in aeroHystrixInfo | filter:searchFilter">
+							<td style="word-break: break-all;">{{ value.name }}</td>
 							<td style="word-break: break-all;">{{ value['circuitBreakerStatus'] }}</td>
 							<td style="word-break: break-all;">{{ value['totalCount'] }}</td>
 							<td style="word-break: break-all;">{{ value['averageLatency'] }}</td>
@@ -51,7 +51,7 @@
 							<td style="word-break: break-all;">{{ value['fallBackRejectedCount'] }}</td>
 						</tr>
 					</table>
-				<!--</div>-->
+				</div>
 			</sba-accordion-body>
 		</sba-accordion-group>
 		<!-- End Application Build Information -->
