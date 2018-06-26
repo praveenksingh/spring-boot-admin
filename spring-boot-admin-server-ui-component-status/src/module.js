@@ -17,32 +17,44 @@
 
 var angular = require('angular');
 
-var module = angular.module('sba-applications-environment', ['sba-applications']);
+var module = angular.module('sba-applications-component-status', ['sba-applications']);
 global.sbaModules.push(module.name);
 
 module.controller('componentStatusCtrl', require('./controllers/componentStatusCtrl.js'));
 
-module.component('sbaEnvironmentManager', require('./components/environmentManager.js'));
-
 module.config(function ($stateProvider) {
-  $stateProvider.state('applications.environment', {
-    url: '/properties',
-    templateUrl: 'applications-environment/views/component-status.html',
+  $stateProvider.state('applications.componentStatus', {
+    url: '/componentstatus',
+    templateUrl: 'applications-component-status/views/componentstatus.html',
     controller: 'componentStatusCtrl'
   });
 });
 
-module.run(function (ApplicationViews, $http, $sce) {
+module.run(function (ApplicationViews, $sce, $q, $http) {
+  var isEventSourceAvailable = function (url) {
+    var deferred = $q.defer();
+
+    $http.get(url, {
+      eventHandlers: {
+        'progress': function (event) {
+          deferred.resolve(event.target.status === 200);
+          event.target.abort();
+        },
+        'error': function () {
+          deferred.resolve(false);
+        }
+      }
+    });
+
+    return deferred.promise;
+  };
+
   ApplicationViews.register({
-    order: 10,
-    title: $sce.trustAsHtml('<i class="fa fa-server fa-fw"></i>Environment'),
-    state: 'applications.environment',
+    order: 150,
+    title: $sce.trustAsHtml('<i class="fa fa-gear fa-fw"></i>Component Status'),
+    state: 'applications.componentStatus',
     show: function (application) {
-      return $http.head('api/applications/' + application.id + '/env').then(function () {
-        return true;
-      }).catch(function () {
-        return false;
-      });
+      return isEventSourceAvailable('api/applications/' + application.id + '/env');
     }
   });
 });

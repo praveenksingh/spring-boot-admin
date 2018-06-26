@@ -1,369 +1,397 @@
-<div class="container-fluid">
-	<sba-accordion>
-		<!-- Begin Aero Hystrix Statistics-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadAeroHystrixComponentStatus()">Aero Hystrix Statistics</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<form class="form-inline input-append">
-					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-					<button class="btn" title="reload list" ng-click="getAeroHystrixComponentStatus(false)"><i class="fa fa-repeat"></i></button>
-					<button class="btn" title="reset" ng-click="getAeroHystrixComponentStatus(true)"><i class="fas fa-power-off"></i></button>
-				</form>
-				<div ng-show="!searchFilter || (aeroHystrixInfo | filter:searchFilter).length > 0">
-					<table class="table table-hover">
-						<thead>
-						<tr>
-							<th scope="col">Command Name</th>
-							<th scope="col">Circuit Breaker Status</th>
-							<th scope="col">Total Count</th>
-							<th scope="col">Average Latency(ms)</th>
-							<th scope="col">Success Count</th>
-							<th scope="col">Error Count</th>
-							<th scope="col">Failure Count</th>
-							<th scope="col">ShortCircuited Count</th>
-							<th scope="col">Semaphore Rejected Count</th>
-							<th scope="col">ThreadPool Rejected Count</th>
-							<th scope="col">Timeout Count</th>
-							<th scope="col">FallBack Success Count</th>
-							<th scope="col">FallBack Failure Count</th>
-							<th scope="col">FallBack Rejected Count</th>
-						</tr>
-						</thead>
-						<tr ng-repeat="value in aeroHystrixInfo | filter:searchFilter">
-							<td style="word-break: break-all;">{{ value.name }}</td>
-							<td style="word-break: break-all;">{{ value['circuitBreakerStatus'] }}</td>
-							<td style="word-break: break-all;">{{ value['totalCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['averageLatency'] }}</td>
-							<td style="word-break: break-all;">{{ value['successCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['errorCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['failureCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['shortCircuitedCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['semaphoreRejectedCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['threadPoolRejectedCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['timeoutCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['fallBackSucessCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['fallBackFailureCount'] }}</td>
-							<td style="word-break: break-all;">{{ value['fallBackRejectedCount'] }}</td>
-						</tr>
-					</table>
-				</div>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End Application Build Information -->
+<!--<div class="container-fluid">-->
+	<!--<sba-accordion>-->
+		<!--&lt;!&ndash; Begin Aero Hystrix Statistics&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadAeroHystrixComponentStatus()">Aero Hystrix Statistics</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<form class="form-inline input-append">-->
+					<!--<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />-->
+					<!--<button class="btn" title="reload list" ng-click="getAeroHystrixComponentStatus(false)"><i class="fa fa-repeat"></i></button>-->
+					<!--<button class="btn" title="reset" ng-click="getAeroHystrixComponentStatus(true)"><i class="fas fa-power-off"></i></button>-->
+				<!--</form>-->
+				<!--<div ng-show="!searchFilter || (aeroHystrixInfo | filter:searchFilter).length > 0">-->
+					<!--<table class="table table-hover">-->
+						<!--<thead>-->
+						<!--<tr>-->
+							<!--<th scope="col">Command Name</th>-->
+							<!--<th scope="col">Circuit Breaker Status</th>-->
+							<!--<th scope="col">Total Count</th>-->
+							<!--<th scope="col">Average Latency(ms)</th>-->
+							<!--<th scope="col">Success Count</th>-->
+							<!--<th scope="col">Error Count</th>-->
+							<!--<th scope="col">Failure Count</th>-->
+							<!--<th scope="col">ShortCircuited Count</th>-->
+							<!--<th scope="col">Semaphore Rejected Count</th>-->
+							<!--<th scope="col">ThreadPool Rejected Count</th>-->
+							<!--<th scope="col">Timeout Count</th>-->
+							<!--<th scope="col">FallBack Success Count</th>-->
+							<!--<th scope="col">FallBack Failure Count</th>-->
+							<!--<th scope="col">FallBack Rejected Count</th>-->
+						<!--</tr>-->
+						<!--</thead>-->
+						<!--<tr ng-repeat="value in aeroHystrixInfo | filter:searchFilter">-->
+							<!--<td style="word-break: break-all;">{{ value.name }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['circuitBreakerStatus'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['totalCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['averageLatency'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['successCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['errorCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['failureCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['shortCircuitedCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['semaphoreRejectedCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['threadPoolRejectedCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['timeoutCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['fallBackSucessCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['fallBackFailureCount'] }}</td>-->
+							<!--<td style="word-break: break-all;">{{ value['fallBackRejectedCount'] }}</td>-->
+						<!--</tr>-->
+					<!--</table>-->
+				<!--</div>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End Application Build Information &ndash;&gt;-->
 
-		<!-- Begin Application Configuration-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadApplicationConf()">Application Configuration</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<form class="form-inline input-append">
-					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-					<button class="btn" title="reload list" ng-click="getApplicationConfiguration()"><i class="fa fa-repeat"></i></button>
-				</form>
-				<sba-info-panel category="ConfigSource" panel-title="{{source.name}}" ng-repeat="source in conf" ng-show="!searchFilter || (source.properties | filter:searchFilter).length > 0">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col" width="30%">Key</th>
-								<th scope="col" width="55%">Value</th>
-								<th scope="col" width="15%">Origin</th>
-							</tr>
-						</thead>
-						<tr ng-repeat="property in source.properties | filter:searchFilter">
-							<td style="word-break: break-all;">{{property.key}}</td>
-							<td style="word-break: break-all;">{{property.value}}</td>
-							<td style="word-break: break-all;">{{property.origin}}</td>
-						</tr>
-						<tr ng-if="source.properties.length == 0">
-							<td colspan="2">-</td>
-						</tr>
-					</table>
-				</sba-info-panel>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End Application Configuration -->
+		<!--&lt;!&ndash; Begin Application Configuration&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadApplicationConf()">Application Configuration</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<form class="form-inline input-append">-->
+					<!--<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />-->
+					<!--<button class="btn" title="reload list" ng-click="getApplicationConfiguration()"><i class="fa fa-repeat"></i></button>-->
+				<!--</form>-->
+				<!--<sba-info-panel category="ConfigSource" panel-title="{{source.name}}" ng-repeat="source in conf" ng-show="!searchFilter || (source.properties | filter:searchFilter).length > 0">-->
+					<!--<table class="table table-hover">-->
+						<!--<thead>-->
+							<!--<tr>-->
+								<!--<th scope="col" width="30%">Key</th>-->
+								<!--<th scope="col" width="55%">Value</th>-->
+								<!--<th scope="col" width="15%">Origin</th>-->
+							<!--</tr>-->
+						<!--</thead>-->
+						<!--<tr ng-repeat="property in source.properties | filter:searchFilter">-->
+							<!--<td style="word-break: break-all;">{{property.key}}</td>-->
+							<!--<td style="word-break: break-all;">{{property.value}}</td>-->
+							<!--<td style="word-break: break-all;">{{property.origin}}</td>-->
+						<!--</tr>-->
+						<!--<tr ng-if="source.properties.length == 0">-->
+							<!--<td colspan="2">-</td>-->
+						<!--</tr>-->
+					<!--</table>-->
+				<!--</sba-info-panel>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End Application Configuration &ndash;&gt;-->
 
-		<!-- Begin Application Build Information-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadBuildInformation()">Application Build Information</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<form class="form-inline input-append">
-					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-				</form>
-				<div ng-show="!searchFilter || (buildInfo | filter:searchFilter).length > 0">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col" width="35%">Metric</th>
-								<th scope="col" width="65%">Value</th>
-							</tr>
-						</thead>
-						<tr ng-repeat="info in buildInfo | filter:searchFilter">
-							<td style="word-break: break-all;">{{ info.name }}</td>
-							<td style="word-break: break-all;">{{ info.value }}</td>
-							<!--<td style="word-break: break-all;" ng-show="info.value.indexOf('http://') == 0 ||info.value.indexOf('https://') == 0"><a>{{ info.value }}</a></td>-->
-							<!--<td style="word-break: break-all;" ng-hide="info.value.indexOf('http://' == 0) || info.value.indexOf('https://') == 0">{{ info.value }}</td>-->
-						</tr>
-					</table>
-				</div>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End Application Build Information -->
+		<!--&lt;!&ndash; Begin Application Build Information&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadBuildInformation()">Application Build Information</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<form class="form-inline input-append">-->
+					<!--<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />-->
+				<!--</form>-->
+				<!--<div ng-show="!searchFilter || (buildInfo | filter:searchFilter).length > 0">-->
+					<!--<table class="table table-hover">-->
+						<!--<thead>-->
+							<!--<tr>-->
+								<!--<th scope="col" width="35%">Metric</th>-->
+								<!--<th scope="col" width="65%">Value</th>-->
+							<!--</tr>-->
+						<!--</thead>-->
+						<!--<tr ng-repeat="info in buildInfo | filter:searchFilter">-->
+							<!--<td style="word-break: break-all;">{{ info.name }}</td>-->
+							<!--<td style="word-break: break-all;">{{ info.value }}</td>-->
+							<!--&lt;!&ndash;<td style="word-break: break-all;" ng-show="info.value.indexOf('http://') == 0 ||info.value.indexOf('https://') == 0"><a>{{ info.value }}</a></td>&ndash;&gt;-->
+							<!--&lt;!&ndash;<td style="word-break: break-all;" ng-hide="info.value.indexOf('http://' == 0) || info.value.indexOf('https://') == 0">{{ info.value }}</td>&ndash;&gt;-->
+						<!--</tr>-->
+					<!--</table>-->
+				<!--</div>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End Application Build Information &ndash;&gt;-->
 
-		<!-- Begin JavaCalService Information-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadJavaCalServiceInformation()">JavaCalService Information</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<table class="table table-hover">
-					<thead>
-					<tr>
-						<th scope="col">Remote Address</th>
-						<th scope="col">Instance</th>
-						<th scope="col">State</th>
-						<th scope="col">Status</th>
-					</tr>
-					</thead>
-					<tr ng-repeat="info in javaCalServInfo">
-						<td style="word-break: break-all;">{{ info.host }}</td>
-						<td style="word-break: break-all;">{{ info.instance }}</td>
-						<td style="word-break: break-all;">{{ info.state }}</td>
-						<td style="word-break: break-all;">{{ info.status }}</td>
-					</tr>
-				</table>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End JavaCalService Information-->
+		<!--&lt;!&ndash; Begin JavaCalService Information&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadJavaCalServiceInformation()">JavaCalService Information</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<table class="table table-hover">-->
+					<!--<thead>-->
+					<!--<tr>-->
+						<!--<th scope="col">Remote Address</th>-->
+						<!--<th scope="col">Instance</th>-->
+						<!--<th scope="col">State</th>-->
+						<!--<th scope="col">Status</th>-->
+					<!--</tr>-->
+					<!--</thead>-->
+					<!--<tr ng-repeat="info in javaCalServInfo">-->
+						<!--<td style="word-break: break-all;">{{ info.host }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info.instance }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info.state }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info.status }}</td>-->
+					<!--</tr>-->
+				<!--</table>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End JavaCalService Information&ndash;&gt;-->
 
-		<!-- Begin Host Information-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadHostInformation()">Host Information</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<form class="form-inline input-append">
-					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-				</form>
-				<div ng-show="!searchFilter || (hostInfo | filter:searchFilter).length > 0">
-					<table class="table table-hover">
-						<thead>
-						<tr>
-							<th scope="col" width="35%">Metric</th>
-							<th scope="col" width="65%">Value</th>
-						</tr>
-						</thead>
-						<tr ng-repeat="info in hostInfo | filter:searchFilter">
-							<td style="word-break: break-all;">{{ info.name }}</td>
-							<td style="word-break: break-all;">{{ info.value }}</td>
-						</tr>
-					</table>
-				</div>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End Host Information -->
+		<!--&lt;!&ndash; Begin Host Information&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadHostInformation()">Host Information</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<form class="form-inline input-append">-->
+					<!--<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />-->
+				<!--</form>-->
+				<!--<div ng-show="!searchFilter || (hostInfo | filter:searchFilter).length > 0">-->
+					<!--<table class="table table-hover">-->
+						<!--<thead>-->
+						<!--<tr>-->
+							<!--<th scope="col" width="35%">Metric</th>-->
+							<!--<th scope="col" width="65%">Value</th>-->
+						<!--</tr>-->
+						<!--</thead>-->
+						<!--<tr ng-repeat="info in hostInfo | filter:searchFilter">-->
+							<!--<td style="word-break: break-all;">{{ info.name }}</td>-->
+							<!--<td style="word-break: break-all;">{{ info.value }}</td>-->
+						<!--</tr>-->
+					<!--</table>-->
+				<!--</div>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End Host Information &ndash;&gt;-->
 
-		<!-- Begin JavaCpuTimeStats Information-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadJavaCpuTimeStats()">JavaCpuTimeStats</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<div ng-repeat="values in javaCpuTimeStats">
-					<sba-info-panel panel-title="{{ key }}" ng-repeat="(key, val) in values" >
-						<table class="table table-hover">
-							<thead>
-							<tr>
-								<th scope="col">Command Name</th>
-								<th scope="col">Count</th>
-								<th scope="col">Avg Cpu Time (ms)</th>
-								<th scope="col">Avg Elapsed Time (ms)</th>
-								<th scope="col">Max Cpu Time (ms)</th>
-								<th scope="col">Max Elapsed Time (ms)</th>
-								<th scope="col">Cpu Time Variance (ms)</th>
-							</tr>
-							</thead>
-							<tr ng-repeat="(key2, value) in val">
-								<td style="word-break: break-all;">{{ key2 }}</td>
-								<td style="word-break: break-all;">{{ value.requestCount }}</td>
-								<td style="word-break: break-all;">{{ value.avgJavaCpuTime }}</td>
-								<td style="word-break: break-all;">{{ value.avgElapsedTime }}</td>
-								<td style="word-break: break-all;">{{ value.maxJavaCpuTime }}</td>
-								<td style="word-break: break-all;">{{ value.maxElapsedTime }}</td>
-								<td style="word-break: break-all;">{{ value.jctVariance }}</td>
-							</tr>
-						</table>
-					</sba-info-panel>
-				</div>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End JavaCpuTimeStats Information-->
+		<!--&lt;!&ndash; Begin JavaCpuTimeStats Information&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadJavaCpuTimeStats()">JavaCpuTimeStats</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<div ng-repeat="values in javaCpuTimeStats">-->
+					<!--<sba-info-panel panel-title="{{ key }}" ng-repeat="(key, val) in values" >-->
+						<!--<table class="table table-hover">-->
+							<!--<thead>-->
+							<!--<tr>-->
+								<!--<th scope="col">Command Name</th>-->
+								<!--<th scope="col">Count</th>-->
+								<!--<th scope="col">Avg Cpu Time (ms)</th>-->
+								<!--<th scope="col">Avg Elapsed Time (ms)</th>-->
+								<!--<th scope="col">Max Cpu Time (ms)</th>-->
+								<!--<th scope="col">Max Elapsed Time (ms)</th>-->
+								<!--<th scope="col">Cpu Time Variance (ms)</th>-->
+							<!--</tr>-->
+							<!--</thead>-->
+							<!--<tr ng-repeat="(key2, value) in val">-->
+								<!--<td style="word-break: break-all;">{{ key2 }}</td>-->
+								<!--<td style="word-break: break-all;">{{ value.requestCount }}</td>-->
+								<!--<td style="word-break: break-all;">{{ value.avgJavaCpuTime }}</td>-->
+								<!--<td style="word-break: break-all;">{{ value.avgElapsedTime }}</td>-->
+								<!--<td style="word-break: break-all;">{{ value.maxJavaCpuTime }}</td>-->
+								<!--<td style="word-break: break-all;">{{ value.maxElapsedTime }}</td>-->
+								<!--<td style="word-break: break-all;">{{ value.jctVariance }}</td>-->
+							<!--</tr>-->
+						<!--</table>-->
+					<!--</sba-info-panel>-->
+				<!--</div>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End JavaCpuTimeStats Information&ndash;&gt;-->
 
-		<!-- Begin Environment Properties-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a>Environment Properties</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<form class="form-inline input-append">
-					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-					<button class="btn" title="reload list" ng-click="refresh()"><i class="fa fa-repeat"></i></button>
-				</form>
-				<sba-info-panel panel-title="Environment manager" ng-show="refreshSupported">
-					<sba-environment-manager environment="env" application="application" on-environment-changed="refresh"></sba-environment-manager>
-				</sba-info-panel>
-				<sba-info-panel category="PropertySource" panel-title="{{source.name}}" ng-repeat="source in env" ng-show="!searchFilter || (source.value | filter:searchFilter).length > 0">
-					<table class="table table-hover">
-						<col width="35%">
-						<col width="65%">
-						<tr ng-repeat="property in source.value | filter:searchFilter">
-							<td style="word-break: break-all;">{{property.name}}</td>
-							<td style="word-break: break-all;">{{property.value}}</td>
-						</tr>
-						<tr ng-if="source.value.length == 0">
-							<td colspan="2">-</td>
-						</tr>
-					</table>
-				</sba-info-panel>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End Environment Properties -->
-
-
-		<!-- Begin Command Stage Handler Component Status-->
-        <sba-accordion-group>
-            <sba-accordion-heading>
-                <a ng-click="loadCommandStageHandlerComponentStatus()">CommandStageHandlerComponentStatus</a>
-            </sba-accordion-heading>
-            <sba-accordion-body>
-                <div class="alert alert-error" ng-if="error">
-                    <b>Error:</b> {{ error }}
-                </div>
-				<table class="table table-hover">
-					<thead>
-					<tr>
-						<th scope="col" width="25%">StageId</th>
-						<th scope="col" width="25%">Handler Name</th>
-						<th scope="col" width="50%">Handler Class</th>
-					</tr>
-					</thead>
-					<tr ng-repeat="info in cmdStHndlrCmptStatInfo">
-						<td style="word-break: break-all;">{{ info['StageId'] }}</td>
-						<td style="word-break: break-all;">{{ info['Handler Name'] }}</td>
-						<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>
-					</tr>
-				</table>
-            </sba-accordion-body>
-        </sba-accordion-group>
-		<!-- End Command Stage Handler Component Status -->
-
-		<!-- Begin RaptorBundleComponentStatus-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadRaptorBundleComponentStatus()">RaptorBundlesComponentStatus</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<form class="form-inline input-append">
-					<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
-				</form>
-				<div ng-show="!searchFilter || (raptorBundleCmptStat | filter:searchFilter).length > 0">
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th colspan="3">Bundle</th>
-									<th colspan="3">SCM</th>
-									<th colspan="2">Init</th>
-								</tr>
-								<tr>
-									<th scope="col">Symbolic Name</th>
-									<th scope="col">Version</th>
-									<th scope="col">Top?</th>
-									<th scope="col">URL</th>
-									<th scope="col">Tag/Commit ID</th>
-									<th scope="col">Branch</th>
-									<th scope="col">Success</th>
-									<th scope="col">Messages</th>
-								</tr>
-							</thead>
-							<tr ng-repeat="info in raptorBundleCmptStat | filter:searchFilter">
-								<td style="word-break: break-all;">{{ info['Bundle Symbolic Name'] }}</td>
-								<td style="word-break: break-all;">{{ info['Bundle Version'] }}</td>
-								<td style="word-break: break-all;">{{ info['Top Level?'] }}</td>
-								<td style="word-break: break-all;">{{ info['SCM URL'] }}</td>
-								<td style="word-break: break-all;">{{ info['Tag/Commit ID'] }}</td>
-								<td style="word-break: break-all;">{{ info['Branch'] }}</td>
-								<td style="word-break: break-all;">{{ info['Init Success?'] }}</td>
-								<td style="word-break: break-all;">{{ info['Init Messages'] }}</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End RaptorBundleComponentStatus -->
-
-		<!-- Begin RaptorCommandHandlerComponentStatus-->
-		<sba-accordion-group>
-			<sba-accordion-heading>
-				<a ng-click="loadRaptorCommandHandlerComponentStatus()">RaptorCommandHandlerComponentStatus</a>
-			</sba-accordion-heading>
-			<sba-accordion-body>
-				<div class="alert alert-error" ng-if="error">
-					<b>Error:</b> {{ error }}
-				</div>
-				<table class="table table-hover">
-					<thead>
-					<tr>
-						<th scope="col" width="20%">StageId</th>
-						<th scope="col" width="20%">Handler Name</th>
-						<th scope="col" width="50%">Handler Class</th>
-						<th scope="col" width="10%">Handler Position [1-100]</th>
-					</tr>
-					</thead>
-					<tr ng-repeat="info in raptorCmdHndlrCmptStat">
-						<td style="word-break: break-all;">{{ info['StageId'] }}</td>
-						<td style="word-break: break-all;">{{ info['Handler Name'] }}</td>
-						<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>
-						<td style="word-break: break-all;">{{ info['Handler Position'] }}</td>
-					</tr>
-				</table>
-			</sba-accordion-body>
-		</sba-accordion-group>
-		<!-- End RaptorCommandHandlerComponentStatus -->
+		<!--&lt;!&ndash; Begin Environment Properties&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a>Environment Properties</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<form class="form-inline input-append">-->
+					<!--<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />-->
+					<!--<button class="btn" title="reload list" ng-click="refresh()"><i class="fa fa-repeat"></i></button>-->
+				<!--</form>-->
+				<!--<sba-info-panel panel-title="Environment manager" ng-show="refreshSupported">-->
+					<!--<sba-environment-manager environment="env" application="application" on-environment-changed="refresh"></sba-environment-manager>-->
+				<!--</sba-info-panel>-->
+				<!--<sba-info-panel category="PropertySource" panel-title="{{source.name}}" ng-repeat="source in env" ng-show="!searchFilter || (source.value | filter:searchFilter).length > 0">-->
+					<!--<table class="table table-hover">-->
+						<!--<col width="35%">-->
+						<!--<col width="65%">-->
+						<!--<tr ng-repeat="property in source.value | filter:searchFilter">-->
+							<!--<td style="word-break: break-all;">{{property.name}}</td>-->
+							<!--<td style="word-break: break-all;">{{property.value}}</td>-->
+						<!--</tr>-->
+						<!--<tr ng-if="source.value.length == 0">-->
+							<!--<td colspan="2">-</td>-->
+						<!--</tr>-->
+					<!--</table>-->
+				<!--</sba-info-panel>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End Environment Properties &ndash;&gt;-->
 
 
+		<!--&lt;!&ndash; Begin Command Stage Handler Component Status&ndash;&gt;-->
+        <!--<sba-accordion-group>-->
+            <!--<sba-accordion-heading>-->
+                <!--<a ng-click="loadCommandStageHandlerComponentStatus()">CommandStageHandlerComponentStatus</a>-->
+            <!--</sba-accordion-heading>-->
+            <!--<sba-accordion-body>-->
+                <!--<div class="alert alert-error" ng-if="error">-->
+                    <!--<b>Error:</b> {{ error }}-->
+                <!--</div>-->
+				<!--<table class="table table-hover">-->
+					<!--<thead>-->
+					<!--<tr>-->
+						<!--<th scope="col" width="25%">StageId</th>-->
+						<!--<th scope="col" width="25%">Handler Name</th>-->
+						<!--<th scope="col" width="50%">Handler Class</th>-->
+					<!--</tr>-->
+					<!--</thead>-->
+					<!--<tr ng-repeat="info in cmdStHndlrCmptStatInfo">-->
+						<!--<td style="word-break: break-all;">{{ info['StageId'] }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info['Handler Name'] }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>-->
+					<!--</tr>-->
+				<!--</table>-->
+            <!--</sba-accordion-body>-->
+        <!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End Command Stage Handler Component Status &ndash;&gt;-->
+
+		<!--&lt;!&ndash; Begin RaptorBundleComponentStatus&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadRaptorBundleComponentStatus()">RaptorBundlesComponentStatus</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<form class="form-inline input-append">-->
+					<!--<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />-->
+				<!--</form>-->
+				<!--<div ng-show="!searchFilter || (raptorBundleCmptStat | filter:searchFilter).length > 0">-->
+					<!--<div class="table-responsive">-->
+						<!--<table class="table table-hover">-->
+							<!--<thead>-->
+								<!--<tr>-->
+									<!--<th colspan="3">Bundle</th>-->
+									<!--<th colspan="3">SCM</th>-->
+									<!--<th colspan="2">Init</th>-->
+								<!--</tr>-->
+								<!--<tr>-->
+									<!--<th scope="col">Symbolic Name</th>-->
+									<!--<th scope="col">Version</th>-->
+									<!--<th scope="col">Top?</th>-->
+									<!--<th scope="col">URL</th>-->
+									<!--<th scope="col">Tag/Commit ID</th>-->
+									<!--<th scope="col">Branch</th>-->
+									<!--<th scope="col">Success</th>-->
+									<!--<th scope="col">Messages</th>-->
+								<!--</tr>-->
+							<!--</thead>-->
+							<!--<tr ng-repeat="info in raptorBundleCmptStat | filter:searchFilter">-->
+								<!--<td style="word-break: break-all;">{{ info['Bundle Symbolic Name'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['Bundle Version'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['Top Level?'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['SCM URL'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['Tag/Commit ID'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['Branch'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['Init Success?'] }}</td>-->
+								<!--<td style="word-break: break-all;">{{ info['Init Messages'] }}</td>-->
+							<!--</tr>-->
+						<!--</table>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End RaptorBundleComponentStatus &ndash;&gt;-->
+
+		<!--&lt;!&ndash; Begin RaptorCommandHandlerComponentStatus&ndash;&gt;-->
+		<!--<sba-accordion-group>-->
+			<!--<sba-accordion-heading>-->
+				<!--<a ng-click="loadRaptorCommandHandlerComponentStatus()">RaptorCommandHandlerComponentStatus</a>-->
+			<!--</sba-accordion-heading>-->
+			<!--<sba-accordion-body>-->
+				<!--<div class="alert alert-error" ng-if="error">-->
+					<!--<b>Error:</b> {{ error }}-->
+				<!--</div>-->
+				<!--<table class="table table-hover">-->
+					<!--<thead>-->
+					<!--<tr>-->
+						<!--<th scope="col" width="20%">StageId</th>-->
+						<!--<th scope="col" width="20%">Handler Name</th>-->
+						<!--<th scope="col" width="50%">Handler Class</th>-->
+						<!--<th scope="col" width="10%">Handler Position [1-100]</th>-->
+					<!--</tr>-->
+					<!--</thead>-->
+					<!--<tr ng-repeat="info in raptorCmdHndlrCmptStat">-->
+						<!--<td style="word-break: break-all;">{{ info['StageId'] }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info['Handler Name'] }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info['Handler Class'] }}</td>-->
+						<!--<td style="word-break: break-all;">{{ info['Handler Position'] }}</td>-->
+					<!--</tr>-->
+				<!--</table>-->
+			<!--</sba-accordion-body>-->
+		<!--</sba-accordion-group>-->
+		<!--&lt;!&ndash; End RaptorCommandHandlerComponentStatus &ndash;&gt;-->
 
 
-	</sba-accordion>
 
+
+	<!--</sba-accordion>-->
+
+<!--</div>-->
+
+
+
+<div class="container">
+	<div class="alert alert-error" ng-if="error">
+		<b>Error:</b> {{ error }}
+	</div>
+	<form class="form-inline input-append">
+		<input placeholder="Filter" class="input-xxlarge" type="search" ng-model="searchFilter" />
+		<button class="btn" title="reload list" ng-click="refresh()"><i class="fa fa-repeat"></i></button>
+	</form>
+	<sba-info-panel panel-title="Environment manager" ng-show="refreshSupported">
+		<sba-environment-manager environment="env" application="application" on-environment-changed="refresh"></sba-environment-manager>
+	</sba-info-panel>
+	<sba-info-panel category="PropertySource" panel-title="{{source.name}}" ng-repeat="source in env" ng-show="!searchFilter || (source.value | filter:searchFilter).length > 0">
+		<table class="table">
+			<col width="35%">
+			<col width="65%">
+			<tr ng-repeat="property in source.value | filter:searchFilter">
+				<td style="word-break: break-all;">{{property.name}}</td>
+				<td style="word-break: break-all;">{{property.value}}</td>
+			</tr>
+			<tr ng-if="source.value.length == 0">
+				<td colspan="2">-</td>
+			</tr>
+		</table>
+	</sba-info-panel>
 </div>
