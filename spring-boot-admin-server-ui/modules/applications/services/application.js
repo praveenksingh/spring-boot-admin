@@ -84,41 +84,5 @@ module.exports = function ($resource, $http) {
     return $http.post('api/applications/' + this.id + '/loggers/' + logger, { configuredLevel: level });
   };
 
-  Application.prototype.getApplicationConfiguration = function () {
-    return $http.get('v1/springactuatorserv/api/getApplicationConfiguration').then(convert);
-  };
-
-  Application.prototype.getAeroHystrixComponentStats = function (reset) {
-    return $http.get('v1/springactuatorserv/api/getAeroHystrixComponentStats', {params: { reset: reset }}).then(convert);
-  };
-
-  Application.prototype.getApplicationBuildInformation = function () {
-    return $http.get('v1/springactuatorserv/api/getApplicationBuildInformation').then(convert);
-  };
-
-  Application.prototype.getHostInformation = function () {
-    return $http.get('v1/springactuatorserv/api/getHostInformation').then(convert);
-  };
-
-  Application.prototype.getCommandStageHandlerComponentStatus = function () {
-    return $http.get('v1/springactuatorserv/api/getCommandStageHandlerComponentStatus').then(convert);
-  };
-
-  Application.prototype.getRaptorCommandHandlerComponentStatus = function () {
-    return $http.get('v1/springactuatorserv/api/getRaptorCommandHandlerComponentStatus').then(convert);
-  };
-
-  Application.prototype.getRaptorBundleComponentStatus = function () {
-    return $http.get('v1/springactuatorserv/api/getRaptorBundlesComponentStatus').then(convert);
-  };
-
-  Application.prototype.getJavaCalServiceInformation = function () {
-    return $http.get('v1/springactuatorserv/api/getJavaCalServiceInfo').then(convert);
-  };
-
-  Application.prototype.getJavaCpuTimeStats = function () {
-    return $http.get('v1/springactuatorserv/api/getJavaCpuTimeStats').then(convert);
-  };
-
   return Application;
 };

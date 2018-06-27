@@ -20,13 +20,21 @@ var angular = require('angular');
 var module = angular.module('sba-applications-component-status', ['sba-applications']);
 global.sbaModules.push(module.name);
 
+module.service('ComponentStatus', require('./services/componentStatusService.js'));
 module.controller('componentStatusCtrl', require('./controllers/componentStatusCtrl.js'));
 
 module.config(function ($stateProvider) {
   $stateProvider.state('applications.componentStatus', {
     url: '/componentstatus',
     templateUrl: 'applications-component-status/views/componentstatus.html',
-    controller: 'componentStatusCtrl'
+    controller: 'componentStatusCtrl',
+    resolve: {
+      componentstatus: function ($stateParams, ComponentStatus) {
+          return ComponentStatus.get({
+              id: $stateParams.id
+          }).$promise;
+      }
+    }
   });
 });
 

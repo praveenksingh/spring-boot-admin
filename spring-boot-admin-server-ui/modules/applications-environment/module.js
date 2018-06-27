@@ -20,15 +20,15 @@ var angular = require('angular');
 var module = angular.module('sba-applications-environment', ['sba-applications']);
 global.sbaModules.push(module.name);
 
-module.controller('componentStatusCtrl', require('./controllers/componentStatusCtrl.js'));
+module.controller('environmentCtrl', require('./controllers/environmentCtrl.js'));
 
 module.component('sbaEnvironmentManager', require('./components/environmentManager.js'));
 
 module.config(function ($stateProvider) {
   $stateProvider.state('applications.environment', {
-    url: '/properties',
-    templateUrl: 'applications-environment/views/component-status.html',
-    controller: 'componentStatusCtrl'
+    url: '/environment',
+    templateUrl: 'applications-environment/views/environment.html',
+    controller: 'environmentCtrl'
   });
 });
 

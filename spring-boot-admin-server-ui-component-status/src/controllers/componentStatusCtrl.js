@@ -15,10 +15,10 @@
  */
 'use strict';
 
-module.exports = function ($scope, $http, application) {
+module.exports = function ($scope, $http, componentstatus, application) {
     'ngInject';
 
-  $scope.application = application;
+  $scope.componentstatus = componentstatus;
   $scope.refreshSupported = false;
   $scope.conf = undefined;
   $scope.buildInfo = undefined;
@@ -53,20 +53,6 @@ module.exports = function ($scope, $http, application) {
     });
   };
 
-  $scope.refresh = function () {
-    $scope.env = [];
-    $scope.profiles = [];
-
-    application.getEnv().then(function (response) {
-      var env = response.data;
-      $scope.profiles = env.profiles;
-      delete env.profiles;
-      $scope.env = toArray(env); // to get the env-sources in correct order we have to convert to an array
-    }).catch(function (response) {
-      $scope.error = response.data;
-    });
-  };
-
   function loadAeroHystrixComponentStatus(){
     if ($scope.aeroHystrixInfo === undefined) {
       $scope.getAeroHystrixComponentStatus(false);
@@ -75,7 +61,7 @@ module.exports = function ($scope, $http, application) {
 
   function  getAeroHystrixComponentStatus(reset){
     $scope.aeroHystrixInfo = "";
-    application.getAeroHystrixComponentStats(reset).then(function (response) {
+    componentstatus.getAeroHystrixComponentStats(reset).then(function (response) {
       $scope.aeroHystrixInfo = response.data;
     }).catch(function (response) {
       $scope.error = response.data;
@@ -90,7 +76,7 @@ module.exports = function ($scope, $http, application) {
 
   $scope.getApplicationConfiguration = function(){
     $scope.conf = "";
-    application.getApplicationConfiguration().then(function (response) {
+    componentstatus.getApplicationConfiguration().then(function (response) {
       $scope.conf = response.data;
     }).catch(function (response) {
       $scope.error = response.data;
@@ -100,7 +86,7 @@ module.exports = function ($scope, $http, application) {
   function loadBuildInformation(){
     if ($scope.buildInfo === undefined) {
       $scope.buildInfo = "";
-      application.getApplicationBuildInformation().then(function (response) {
+      componentstatus.getApplicationBuildInformation().then(function (response) {
         $scope.buildInfo = toArray(response.data[0]);
       }).catch(function (response) {
         $scope.error = response.data;
@@ -111,7 +97,7 @@ module.exports = function ($scope, $http, application) {
   function loadHostInformation(){
     if ($scope.hostInfo === undefined) {
       $scope.hostInfo = "";
-      application.getHostInformation().then(function (response) {
+      componentstatus.getHostInformation().then(function (response) {
         $scope.hostInfo = toArray(response.data[0]);
       }).catch(function (response) {
         $scope.error = response.data;
@@ -122,7 +108,7 @@ module.exports = function ($scope, $http, application) {
   function loadCommandStageHandlerComponentStatus(){
     if ($scope.cmdStHndlrCmptStatInfo === undefined) {
       $scope.cmdStHndlrCmptStatInfo = "";
-      application.getCommandStageHandlerComponentStatus().then(function (response) {
+      componentstatus.getCommandStageHandlerComponentStatus().then(function (response) {
         $scope.cmdStHndlrCmptStatInfo = response.data;
       }).catch(function (response) {
         $scope.error = response.data;
@@ -133,7 +119,7 @@ module.exports = function ($scope, $http, application) {
   function loadRaptorBundleComponentStatus(){
     if ($scope.raptorBundleCmptStat === undefined) {
       $scope.raptorBundleCmptStat = "";
-      application.getRaptorBundleComponentStatus().then(function (response) {
+      componentstatus.getRaptorBundleComponentStatus().then(function (response) {
         $scope.raptorBundleCmptStat = response.data;
       }).catch(function (response) {
         $scope.error = response.data;
@@ -144,7 +130,7 @@ module.exports = function ($scope, $http, application) {
   function loadRaptorCommandHandlerComponentStatus(){
     if ($scope.raptorCmdHndlrCmptStat === undefined) {
       $scope.raptorCmdHndlrCmptStat = "";
-      application.getRaptorCommandHandlerComponentStatus().then(function (response) {
+      componentstatus.getRaptorCommandHandlerComponentStatus().then(function (response) {
         $scope.raptorCmdHndlrCmptStat = response.data;
       }).catch(function (response) {
         $scope.error = response.data;
@@ -155,7 +141,7 @@ module.exports = function ($scope, $http, application) {
   function loadJavaCalServiceInformation(){
     if ($scope.javaCalServInfo === undefined) {
       $scope.javaCalServInfo = "";
-      application.getJavaCalServiceInformation().then(function (response) {
+      componentstatus.getJavaCalServiceInformation().then(function (response) {
         $scope.javaCalServInfo = response.data;
       }).catch(function (response) {
         $scope.error = response.data;
@@ -166,7 +152,7 @@ module.exports = function ($scope, $http, application) {
   function loadJavaCpuTimeStats(){
     if ($scope.javaCpuTimeStats === undefined) {
       $scope.javaCpuTimeStats = "";
-      application.getJavaCpuTimeStats().then(function (response) {
+      componentstatus.getJavaCpuTimeStats().then(function (response) {
         $scope.javaCpuTimeStats = response.data;
       }).catch(function (response) {
         $scope.error = response.data;
@@ -174,5 +160,4 @@ module.exports = function ($scope, $http, application) {
     }
   }
 
-  $scope.refresh();
 };
